@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shhh... estás invitadx</title>
+
+  <!-- No queremos que Google indexe la página (es sorpresa) -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Vista previa cuando pegas el link en WhatsApp.
+       OJO: no lleva el nombre de Harol a propósito, por si alguien ve la notificación. -->
+  <meta property="og:title" content="Shhh... tienes una invitación secreta">
+  <meta property="og:description" content="Ábrela a solas. Sábado 21 de noviembre · 7:30 PM · Todxs de verde.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0f0a">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ 1. VARIABLES (cambia aquí los colores y todo se actualiza) ============ */
+    :root {
+      --verde: #3dff3d;          /* verde neón principal */
+      --verde-suave: #b6ffb0;
+      --verde-oscuro: #0f3d14;
+      --fondo: #070b07;
+      --tarjeta: #101710;
+      --borde: #1f3320;
+      --texto: #eaffea;
+      --texto-tenue: #9db89d;
+      --alerta: #ffe94d;
+
+      --f-titulo: "Anton", Impact, sans-serif;
+      --f-marcador: "Permanent Marker", cursive;
+      --f-texto: "Space Grotesk", system-ui, sans-serif;
+
+      --radio: 22px;
+      --ancho: 560px;
+    }
+
+    /* ============ 2. BASE ============ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-texto);
+      background: var(--fondo);
+      color: var(--texto);
+      line-height: 1.55;
+      overflow-x: hidden;
+      /* cuadrícula sutil + brillos verdes de fondo */
+      background-image:
+        radial-gradient(60vmax 60vmax at 110% -10%, rgba(61,255,61,.16), transparent 60%),
+        radial-gradient(50vmax 50vmax at -20% 45%, rgba(61,255,61,.10), transparent 60%),
+        linear-gradient(rgba(61,255,61,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,255,61,.04) 1px, transparent 1px);
+      background-size: auto, auto, 34px 34px, 34px 34px;
+    }
+    main { max-width: var(--ancho); margin: 0 auto; padding: 0 18px 110px; }
+    section { margin-top: 56px; }
+    strong { color: var(--verde); font-weight: 700; }
+
+    /* ============ 3. CINTA SUPERIOR ============ */
+    .cinta {
+      background: var(--verde); color: #041004;
+      font-family: var(--f-titulo); letter-spacing: .08em; font-size: 15px;
+      overflow: hidden; white-space: nowrap; padding: 9px 0;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .cinta__pista { display: inline-block; animation: correr 22s linear infinite; }
+    .cinta__pista span { padding: 0 18px; }
+    @keyframes correr { to { transform: translateX(-50%); } }
+
+    /* ============ 4. PORTADA ============ */
+    .portada { text-align: center; padding-top: 54px; margin-top: 0; position: relative; }
+    .etiqueta {
+      display: inline-block; border: 1.5px dashed var(--verde); color: var(--verde);
+      padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+    }
+    .portada__pre { font-family: var(--f-marcador); font-size: 26px; color: var(--verde-suave); transform: rotate(-3deg); text-align: left; padding-right: 112px; line-height: 1.1; margin-bottom: 22px; }
+    .portada__nombre {
+      font-family: var(--f-titulo); text-transform: uppercase; line-height: .86;
+      font-size: clamp(110px, 36vw, 210px); letter-spacing: -.01em;
+      color: var(--verde);
+      text-shadow: 0 0 18px rgba(61,255,61,.55), 0 0 70px rgba(61,255,61,.35);
+      animation: neon 3.5s ease-in-out infinite;
+    }
+    @keyframes neon {
+      0%, 100% { opacity: 1; }
+      47% { opacity: 1; } 48% { opacity: .72; } 50% { opacity: 1; } 52% { opacity: .85; } 54% { opacity: 1; }
+    }
+    .portada__sub {
+      font-family: var(--f-titulo); text-transform: uppercase;
+      font-size: clamp(34px, 11vw, 62px); line-height: 1;
+      color: transparent; -webkit-text-stroke: 1.5px var(--texto); margin-top: 6px;
+    }
+    .portada__sub b { color: var(--texto); -webkit-text-stroke: 0; font-weight: 400; }
+    .portada__claro { margin-top: 18px; color: var(--texto-tenue); font-size: 17px; }
+    .portada__bloque { position: relative; margin-top: 34px; }
+    /* La imagen trae mucho espacio vacío arriba y abajo: cover + object-position lo recortan sin tocar el archivo */
+    .globos { display: block; margin: 14px auto -22px; width: min(76%, 310px); aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 70%;
+      filter: drop-shadow(0 0 26px rgba(61,255,61,.35)); animation: flotar 5s ease-in-out infinite; }
+    @keyframes flotar { 50% { transform: translateY(-12px) rotate(1.5deg); } }
+
+    /* Foto tipo póster pegado con cinta */
+    .poster { position: relative; width: min(78%, 330px); margin: 0 auto; transform: rotate(2.5deg);
+      background: var(--tarjeta); border: 2px solid var(--verde); border-radius: 18px; padding: 10px 10px 4px;
+      box-shadow: -8px 8px 0 var(--verde-oscuro), 0 0 40px rgba(61,255,61,.25); }
+    .poster img { display: block; width: 100%; border-radius: 10px; }
+    .poster figcaption { font-family: var(--f-marcador); color: var(--verde); font-size: 20px; text-align: center; padding: 8px 0 6px; }
+    .poster::before { content: ""; position: absolute; top: -14px; left: 50%; width: 110px; height: 28px;
+      transform: translateX(-50%) rotate(-4deg); background: rgba(255,233,77,.85); }
+
+    .sello {
+      position: absolute; right: 0; top: -20px; z-index: 2;
+      width: 96px; height: 96px; border-radius: 50%;
+      background: var(--alerta); color: #111; display: grid; place-content: center;
+      font-family: var(--f-titulo); font-size: 15px; line-height: 1.05; text-transform: uppercase;
+      transform: rotate(14deg); box-shadow: 0 8px 30px rgba(0,0,0,.5);
+      animation: latir 2.4s ease-in-out infinite;
+    }
+    @keyframes latir { 50% { transform: rotate(10deg) scale(1.07); } }
+
+    /* ============ 5. CUENTA REGRESIVA ============ */
+    .cuenta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 34px; }
+    .cuenta div {
+      background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 14px 4px 10px;
+    }
+    .cuenta b { display: block; font-family: var(--f-titulo); font-weight: 400; font-size: clamp(34px, 10vw, 48px); color: var(--verde); line-height: 1; font-variant-numeric: tabular-nums; }
+    .cuenta small { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--texto-tenue); }
+
+    /* ============ 6. TARJETAS Y TÍTULOS ============ */
+    .titulo { font-family: var(--f-titulo); font-weight: 400; text-transform: uppercase; font-size: clamp(34px, 9.5vw, 46px); line-height: 1; margin-bottom: 6px; }
+    .titulo span { color: var(--verde); }
+    .nota { font-family: var(--f-marcador); color: var(--verde-suave); font-size: 19px; display: inline-block; transform: rotate(-2deg); margin-bottom: 14px; }
+    .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 24px 22px; }
+    .tarjeta + .tarjeta { margin-top: 14px; }
+
+    /* Alerta de sorpresa */
+    .secreto {
+      background: var(--alerta); color: #141400; border: 0;
+      transform: rotate(-1.2deg); box-shadow: 8px 8px 0 var(--verde);
+    }
+    .secreto h2 { font-family: var(--f-titulo); font-weight: 400; font-size: clamp(38px, 11vw, 54px); line-height: .95; text-transform: uppercase; }
+    .secreto ul { list-style: none; margin-top: 14px; }
+    .secreto li { padding: 9px 0 9px 30px; position: relative; font-weight: 500; border-top: 1.5px dashed rgba(0,0,0,.25); }
+    .secreto li::before { content: "✕"; position: absolute; left: 2px; font-weight: 700; }
+    .secreto strong { color: inherit; text-decoration: underline; text-decoration-thickness: 2px; }
+
+    /* Datos: cuándo / dónde */
+    .dato__clave { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--texto-tenue); }
+    .dato__valor { font-family: var(--f-titulo); font-size: clamp(30px, 8.6vw, 40px); line-height: 1.05; text-transform: uppercase; margin: 4px 0 8px; }
+    .dato__valor em { color: var(--verde); font-style: normal; }
+    .dato p { color: var(--texto-tenue); }
+
+    /* Dress code */
+    .verde-total { background: var(--verde); color: #041004; border: 0; text-align: center; }
+    .verde-total .dato__clave { color: #0b3a0b; }
+    .verde-total h3 { font-family: var(--f-titulo); font-weight: 400; font-size: clamp(54px, 17vw, 86px); line-height: .9; text-transform: uppercase; }
+    .verde-total p { font-weight: 500; margin-top: 10px; }
+    .muestras { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+    .muestras i { width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid #041004; }
+
+    /* Misión video */
+    .pasos { list-style: none; counter-reset: paso; }
+    .pasos li { counter-increment: paso; position: relative; padding: 16px 0 16px 58px; border-top: 1px solid var(--borde); }
+    .pasos li:first-child { border-top: 0; }
+    .pasos li::before {
+      content: counter(paso); position: absolute; left: 0; top: 14px;
+      width: 42px; height: 42px; border-radius: 12px; display: grid; place-content: center;
+      background: var(--verde-oscuro); color: var(--verde); border: 1px solid var(--verde);
+      font-family: var(--f-titulo); font-size: 22px;
+    }
+    .pasos h4 { font-size: 17px; font-weight: 700; }
+    .pasos p { color: var(--texto-tenue); font-size: 15.5px; }
+    .obligatorio {
+      display: inline-block; background: var(--verde); color: #041004; font-weight: 700;
+      font-size: 12px; letter-spacing: .16em; text-transform: uppercase; padding: 5px 12px; border-radius: 6px; margin-bottom: 12px;
+    }
+    .limite { border: 2px solid var(--verde); text-align: center; }
+    .limite .dato__valor { margin-bottom: 2px; }
+    .limite #faltan { color: var(--alerta); font-weight: 700; }
+
+    /* Botones */
+    .boton {
+      display: block; width: 100%; text-align: center; text-decoration: none; cursor: pointer;
+      font-family: var(--f-titulo); font-size: 20px; letter-spacing: .06em; text-transform: uppercase;
+      padding: 16px 18px; border-radius: 14px; margin-top: 16px;
+      background: var(--verde); color: #041004; border: 2px solid var(--verde);
+      box-shadow: 0 0 26px rgba(61,255,61,.35);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .boton:hover, .boton:focus-visible { transform: translateY(-2px); box-shadow: 0 0 40px rgba(61,255,61,.6); }
+    .boton--linea { background: transparent; color: var(--verde); box-shadow: none; }
+
+    /* Botón flotante de música */
+    .musica {
+      position: fixed; right: 14px; bottom: 16px; z-index: 20; cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--f-titulo); font-size: 16px; letter-spacing: .06em; text-transform: uppercase;
+      padding: 12px 18px 12px 14px; border-radius: 999px;
+      background: #041004; color: var(--verde); border: 2px solid var(--verde);
+      box-shadow: 0 0 24px rgba(61,255,61,.45), 0 8px 24px rgba(0,0,0,.6);
+      animation: llamar 2s ease-in-out infinite;
+    }
+    @keyframes llamar { 50% { box-shadow: 0 0 44px rgba(61,255,61,.85), 0 8px 24px rgba(0,0,0,.6); } }
+    .musica.sonando { background: var(--verde); color: #041004; animation: none; }
+    .musica__barras { display: flex; align-items: flex-end; gap: 3px; height: 18px; }
+    .musica__barras i { width: 4px; height: 6px; background: currentColor; border-radius: 2px; }
+    .musica.sonando .musica__barras i { animation: barra .9s ease-in-out infinite; }
+    .musica.sonando .musica__barras i:nth-child(2) { animation-delay: .2s; }
+    .musica.sonando .musica__barras i:nth-child(3) { animation-delay: .45s; }
+    .musica.sonando .musica__barras i:nth-child(4) { animation-delay: .1s; }
+    @keyframes barra { 50% { height: 18px; } }
+
+    footer { text-align: center; margin-top: 60px; color: var(--texto-tenue); font-size: 15px; }
+    footer .firma { font-family: var(--f-marcador); color: var(--verde); font-size: 26px; display: block; margin-top: 6px; }
+
+    /* Aparición al hacer scroll */
+    .aparece { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .aparece.visible { opacity: 1; transform: none; }
+
+    /* Respeta a quien tiene las animaciones desactivadas */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .aparece { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CINTA (el texto va repetido 2 veces para que el loop no se corte) -->
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta__pista">
+      <span>SHHH</span><span>✕</span><span>ES SORPRESA</span><span>✕</span><span>HAROL NO SABE NADA</span><span>✕</span><span>TODXS DE VERDE</span><span>✕</span><span>MANDA TU VIDEO</span><span>✕</span>
+      <span>SHHH</span><span>✕</span><span>ES SORPRESA</span><span>✕</span><span>HAROL NO SABE NADA</span><span>✕</span><span>TODXS DE VERDE</span><span>✕</span><span>MANDA TU VIDEO</span><span>✕</span>
+    </div>
+  </div>
+
+  <!-- MÚSICA: los navegadores no dejan que suene sola, por eso hay un botón -->
+  <audio id="cancion" src="Feid - Feliz Cumpleaños Ferxxo (Official Video).mp3" loop preload="none"></audio>
+  <button class="musica" id="btnMusica" type="button" aria-pressed="false">
+    <span class="musica__barras" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span id="txtMusica">Ponle play</span>
+  </button>
+
+  <main>
+
+    <!-- PORTADA -->
+    <section class="portada">
+      <span class="etiqueta">Top secret · Solo invitadxs</span>
+
+      <!-- IMAGEN 1: globos del 31 (el archivo va en la misma carpeta que index.html) -->
+      <img class="globos" src="Globos Plateados del Número 31.png" alt="Globos con el número 31" onerror="this.remove()">
+
+      <div class="portada__bloque">
+        <div class="sello">Es<br>sorpresa<br>🤫</div>
+        <p class="portada__pre">mor, vamos a celebrar a</p>
+        <h1 class="portada__nombre">Harol</h1>
+      </div>
+      <p class="portada__sub"><b>Fiexxta</b> sorprexxa</p>
+      <p class="portada__claro">Fiesta sorpresa de cumpleaños #31, temática <strong>Ferxxo</strong>.<br>Él no sabe nada, y así se tiene que quedar.</p>
+
+      <div class="cuenta" id="cuenta" aria-label="Cuenta regresiva para la fiesta">
+        <div><b id="d">00</b><small>días</small></div>
+        <div><b id="h">00</b><small>horas</small></div>
+        <div><b id="m">00</b><small>min</small></div>
+        <div><b id="s">00</b><small>seg</small></div>
+      </div>
+    </section>
+
+    <!-- ES SORPRESA -->
+    <section class="aparece">
+      <div class="tarjeta secreto">
+        <h2>Es sorpresa.<br>Repito: sorpresa.</h2>
+        <ul>
+          <li><strong>No le digas nada a Harol.</strong> Ni una pista, ni una indirecta.</li>
+          <li>No subas nada a historias ni estados antes de la fiesta.</li>
+          <li>No reenvíes esta invitación a chats donde esté él.</li>
+          <li>Si te pregunta qué harás el sábado 21: invéntate algo.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- IMAGEN 2: Ferxxo (el archivo va en la misma carpeta que index.html) -->
+    <section class="aparece">
+      <figure class="poster">
+        <img src="Retrato urbano neón de Ferxxo.png" alt="Ferxxo" onerror="this.closest('section').remove()">
+        <figcaption>la temática: Ferxxo</figcaption>
+      </figure>
+    </section>
+
+    <!-- CUÁNDO Y DÓNDE -->
+    <section class="aparece">
+      <h2 class="titulo">La <span>cita</span></h2>
+      <span class="nota">apúntalo ya</span>
+
+      <div class="tarjeta dato">
+        <p class="dato__clave">Cuándo</p>
+        <p class="dato__valor">Sábado 21 de noviembre<br><em>7:30 PM en punto</em></p>
+        <p>La puntualidad es parte de la sorpresa. Calcula tu distancia y el tráfico, y sal con tiempo para que estemos todxs listxs cuando él llegue.</p>
+        <a class="boton boton--linea" id="btnCalendario" target="_blank" rel="noopener">Agregar a mi calendario</a>
+      </div>
+
+      <div class="tarjeta dato">
+        <p class="dato__clave">Dónde</p>
+        <p class="dato__valor">Callejón Eucalipto 7</p>
+        <p>Col. Ahuehuetes Anáhuac</p>
+        <a class="boton boton--linea" id="btnMapa" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      </div>
+
+      <div class="tarjeta verde-total">
+        <p class="dato__clave">Código de vestimenta · obligatorio</p>
+        <h3>Todxs<br>de verde</h3>
+        <p>Sin excepción. Cualquier tono de verde vale, pero que se note.</p>
+        <div class="muestras" aria-hidden="true">
+          <i style="background:#d4ffb8"></i><i style="background:#3dff3d"></i><i style="background:#17c13a"></i><i style="background:#0b7a2a"></i><i style="background:#0f3d14"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISIÓN VIDEO -->
+    <section class="aparece">
+      <span class="obligatorio">Obligatorio para todxs</span>
+      <h2 class="titulo">Tu misión: <span>un video</span></h2>
+      <span class="nota">de 15 a 20 segundos</span>
+
+      <div class="tarjeta">
+        <p style="margin-bottom:10px">Liz y Mariane le estamos armando un <strong>video sorpresa</strong> con mensajes de toda la gente que lo quiere. Para que salga, necesitamos el tuyo:</p>
+        <ol class="pasos">
+          <li>
+            <h4>Di tu nombre</h4>
+            <p>Es lo primero que se tiene que escuchar: «Soy ___». Es importante, no te lo saltes.</p>
+          </li>
+          <li>
+            <h4>Cuéntale por qué es importante en tu vida</h4>
+            <p>Con tus palabras, desde el corazón. No tiene que ser perfecto.</p>
+          </li>
+          <li>
+            <h4>Déjale algo para recordar siempre</h4>
+            <p>Un consejo, algo que admiras de él, unas palabras a las que pueda volver en cualquier momento.</p>
+          </li>
+          <li>
+            <h4>Que dure de 15 a 20 segundos</h4>
+            <p>Cortito. Con buena luz y sin ruido de fondo para que se te escuche bien.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="tarjeta limite">
+        <p class="dato__clave">Fecha límite para enviarlo</p>
+        <p class="dato__valor"><em>Martes 17 de noviembre</em></p>
+        <p id="faltan"></p>
+        <p style="color:var(--texto-tenue);font-size:15px;margin-top:6px">Después de ese día ya no entra en la edición.</p>
+        <a class="boton" id="btnVideo" target="_blank" rel="noopener">Enviar mi video por WhatsApp</a>
+      </div>
+    </section>
+
+    <!-- CONFIRMAR -->
+    <section class="aparece" style="text-align:center">
+      <h2 class="titulo">¿Te <span>apuntas</span>?</h2>
+      <p style="color:var(--texto-tenue)">Regístrate con tu <strong>nombre y apellido</strong> para saber cuántos somos.</p>
+      <div class="tarjeta" style="margin-top:16px;text-align:left">
+        <p><strong>Un registro por persona.</strong> Si vienen 4 de tu casa, son 4 registros: cada quien con su nombre y apellido.</p>
+        <p style="color:var(--texto-tenue);font-size:15px;margin-top:8px">¿Comparten celular? Al terminar, toca «Enviar otra respuesta» y registra a la siguiente persona.</p>
+      </div>
+      <a class="boton" id="btnConfirmar" target="_blank" rel="noopener">Confirmar mi asistencia</a>
+    </section>
+
+    <footer>
+      Nos vemos el 21 para festejarle con toda la disposición y todo el cariño.
+      <span class="firma">Liz y Mariane</span>
+    </footer>
+  </main>
+
+  <script>
+    /* ============ CONFIGURACIÓN: lo único que necesitas editar ============ */
+    const CONFIG = {
+      // Número de WhatsApp que recibe videos y confirmaciones.
+      // Formato: 52 + 10 dígitos, sin espacios ni signos. Ejemplo: "525512345678"
+      // Si lo dejas vacío, WhatsApp le pedirá a la persona elegir el contacto.
+      whatsapp: "525534613682",
+
+      fiesta:      "2026-11-21T19:30:00-06:00",   // fecha y hora de la fiesta (hora CDMX)
+      limiteVideo: "2026-11-17T23:59:59-06:00",   // último momento para mandar el video
+      direccion:   "Callejón Eucalipto 7, Ahuehuetes Anáhuac, Miguel Hidalgo, Ciudad de México",
+
+      mensajeVideo: "Hola, aquí va mi video para la sorpresa de Harol. Soy ",
+
+      // Link PÚBLICO del Google Forms (termina en /viewform, no en /edit)
+      formulario: "https://docs.google.com/forms/d/e/1FAIpQLSewlc3O6bO4gRk_MP-BoG6Bmspk2JzdTrh21qi9GkThRjjHqg/viewform?usp=publish-editor"
+    };
+
+    /* ============ ENLACES (se arman solos con la configuración) ============ */
+    const wa = (texto) => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(texto);
+
+    document.getElementById("btnVideo").href     = wa(CONFIG.mensajeVideo);
+    document.getElementById("btnConfirmar").href = CONFIG.formulario;
+    document.getElementById("btnMapa").href =
+      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.direccion);
+
+    // Google Calendar pide la fecha en formato 20261122T013000Z
+    const aFormatoCalendario = (fecha) => fecha.toISOString().replace(/[-:]|\.\d{3}/g, "");
+    const inicio = new Date(CONFIG.fiesta);
+    const fin = new Date(inicio.getTime() + 5 * 60 * 60 * 1000); // 5 horas después
+    document.getElementById("btnCalendario").href =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent("Fiesta sorpresa (shhh) · ir de verde") +
+      "&dates=" + aFormatoCalendario(inicio) + "/" + aFormatoCalendario(fin) +
+      "&location=" + encodeURIComponent(CONFIG.direccion) +
+      "&details=" + encodeURIComponent("Llegar 7:30 PM en punto. Todxs de verde. Es SORPRESA.");
+
+    /* ============ CUENTA REGRESIVA ============ */
+    const dosDigitos = (n) => String(n).padStart(2, "0");
+
+    function actualizar() {
+      const ahora = Date.now();
+
+      // Fiesta
+      let resta = Math.max(0, inicio.getTime() - ahora);
+      const seg = Math.floor(resta / 1000);
+      document.getElementById("d").textContent = dosDigitos(Math.floor(seg / 86400));
+      document.getElementById("h").textContent = dosDigitos(Math.floor(seg % 86400 / 3600));
+      document.getElementById("m").textContent = dosDigitos(Math.floor(seg % 3600 / 60));
+      document.getElementById("s").textContent = dosDigitos(seg % 60);
+
+      // Límite del video
+      const restaVideo = new Date(CONFIG.limiteVideo).getTime() - ahora;
+      const dias = Math.floor(restaVideo / 86400000);
+      const faltan = document.getElementById("faltan");
+      if (restaVideo <= 0)      faltan.textContent = "La entrega de videos ya cerró.";
+      else if (dias === 0)      faltan.textContent = "¡Es HOY! Mándalo antes de medianoche.";
+      else if (dias === 1)      faltan.textContent = "Queda 1 día. No lo dejes para el final.";
+      else                      faltan.textContent = "Quedan " + dias + " días. No lo dejes para el final.";
+    }
+    actualizar();
+    setInterval(actualizar, 1000);
+
+    /* ============ MÚSICA ============ */
+    const cancion = document.getElementById("cancion");
+    const btnMusica = document.getElementById("btnMusica");
+    const txtMusica = document.getElementById("txtMusica");
+
+    btnMusica.addEventListener("click", () => {
+      if (cancion.paused) cancion.play(); else cancion.pause();
+    });
+    // El botón cambia solo según lo que de verdad esté pasando con el audio
+    cancion.addEventListener("play",  () => { btnMusica.classList.add("sonando");    btnMusica.setAttribute("aria-pressed", "true");  txtMusica.textContent = "Pausar"; });
+    cancion.addEventListener("pause", () => { btnMusica.classList.remove("sonando"); btnMusica.setAttribute("aria-pressed", "false"); txtMusica.textContent = "Ponle play"; });
+    cancion.addEventListener("error", () => btnMusica.remove()); // si falta el mp3, el botón no aparece
+
+    /* ============ APARICIÓN AL HACER SCROLL ============ */
+    const observador = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".aparece").forEach((el) => observador.observe(el));
+  </script>
+</body>
+</html>
