@@ -307,7 +307,7 @@
 
       <div class="tarjeta dato">
         <p class="dato__clave">Dónde</p>
-        <p class="dato__valor">Callejón Eucalipto 7</p>
+        <p class="dato__valor">Callejón Eucalipto 1</p>
         <p>Col. Ahuehuetes Anáhuac</p>
         <a class="boton boton--linea" id="btnMapa" target="_blank" rel="noopener">Abrir en Google Maps</a>
       </div>
@@ -386,7 +386,9 @@
 
       fiesta:      "2026-11-21T19:30:00-06:00",   // fecha y hora de la fiesta (hora CDMX)
       limiteVideo: "2026-11-17T23:59:59-06:00",   // último momento para mandar el video
-      direccion:   "Callejón Eucalipto 7, Ahuehuetes Anáhuac, Miguel Hidalgo, Ciudad de México",
+      // Link exacto del lugar en Google Maps (el botón "Abrir en Google Maps" lleva aquí)
+      mapa: "https://www.google.com/maps/place/Cjon.+Eucalipto+1,+Ahuehuetes+An%C3%A1huac,+Miguel+Hidalgo,+11450+Ciudad+de+M%C3%A9xico,+CDMX/@19.448999,-99.1899723,17z/data=!3m1!4b1!4m6!3m5!1s0x85d2020a08294cff:0xa0b880301c383287!8m2!3d19.448999!4d-99.1899723!16s%2Fg%2F11c1fk8txm",
+      direccion:   "Callejón Eucalipto 1, Ahuehuetes Anáhuac, Miguel Hidalgo, Ciudad de México",
 
       mensajeVideo: "Hola, aquí va mi video para la sorpresa de Harol. Soy ",
 
@@ -399,8 +401,7 @@
 
     document.getElementById("btnVideo").href     = wa(CONFIG.mensajeVideo);
     document.getElementById("btnConfirmar").href = CONFIG.formulario;
-    document.getElementById("btnMapa").href =
-      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.direccion);
+    document.getElementById("btnMapa").href = CONFIG.mapa;
 
     // Google Calendar pide la fecha en formato 20261122T013000Z
     const aFormatoCalendario = (fecha) => fecha.toISOString().replace(/[-:]|\.\d{3}/g, "");
